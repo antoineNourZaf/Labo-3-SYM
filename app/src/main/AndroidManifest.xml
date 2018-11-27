@@ -17,6 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ch.heigvd.iict.sym.a3dcompassapp.CompassActivity" />
     </application>
 
 </manifest>
