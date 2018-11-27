@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Labo-3 : SYM</string>
-    <string name="NFC">Diff</string>
-    <string name="QR">Object</string>
-    <string name="iBeacon">JSON/XML</string>
-    <string name="Capteurs">Compressed</string>
+    <string name="NFC">NFC</string>
+    <string name="QR">QR Code</string>
+    <string name="iBeacon">iBeacon</string>
+    <string name="Capteurs">Capteurs</string>
 </resources>
