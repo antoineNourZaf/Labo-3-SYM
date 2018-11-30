@@ -4,4 +4,5 @@
     <string name="QR">QR Code</string>
     <string name="iBeacon">iBeacon</string>
     <string name="Capteurs">Capteurs</string>
+    <string name="explanation">Coucou</string>
 </resources>
