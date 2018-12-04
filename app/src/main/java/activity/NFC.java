@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,15 +30,16 @@ public class NFC extends AppCompatActivity {
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
 
-    private TextView mTextView;
     private NfcAdapter mNfcAdapter;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nfc);
 
-        mTextView = findViewById(R.id.textView_explanation);
+        mImageView = findViewById(R.id.imageDisplay);
+
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -47,12 +49,6 @@ public class NFC extends AppCompatActivity {
             finish();
             return;
 
-        }
-
-        if (!mNfcAdapter.isEnabled()) {
-            mTextView.setText("NFC is disabled.");
-        } else {
-            mTextView.setText(R.string.explanation);
         }
 
         handleIntent(getIntent());
@@ -203,9 +199,6 @@ public class NFC extends AppCompatActivity {
             // Get the Language Code
             int languageCodeLength = payload[0] & 0063;
 
-            // String languageCode = new String(payload, 1, languageCodeLength, "US-ASCII");
-            // e.g. "en"
-
             // Get the Text
             return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
         }
@@ -213,8 +206,13 @@ public class NFC extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                mTextView.setText("Read content: " + result);
+                if (result.equals("test")) {
+                    mImageView.setImageResource(R.drawable.nfcgreen);
+                    mImageView.setContentDescription(getResources().getString(R.string.imgNFCGreen));
+                }
             }
         }
+
     }
+
 }

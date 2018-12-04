@@ -4,5 +4,9 @@
     <string name="QR">QR Code</string>
     <string name="iBeacon">iBeacon</string>
     <string name="Capteurs">Capteurs</string>
-    <string name="explanation">Coucou</string>
+    <string name="Username">Username</string>
+    <string name="psw">Password</string>
+    <string name="signin">Sign in</string>
+    <string name="imgNFCRed">Image NFC rouge</string>
+    <string name="imgNFCGreen">Image NFC vert</string>
 </resources>
