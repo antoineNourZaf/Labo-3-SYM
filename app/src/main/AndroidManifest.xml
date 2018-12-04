@@ -22,6 +22,10 @@
             android:name="activity.NFC"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name="activity.TimeToLive"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature

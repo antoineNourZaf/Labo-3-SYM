@@ -60,9 +60,7 @@ public class NFC extends AppCompatActivity {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         // disable component
-        textUser.setEnabled(false);
-        textPass.setEnabled(false);
-        submit.setEnabled(false);
+        disable();
 
         if (mNfcAdapter == null) {
             // Stop here, we definitely need NFC
@@ -96,7 +94,8 @@ public class NFC extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        // TODO check if it's correct
+        disable();
         /**
          * It's important, that the activity is in the foreground (resumed). Otherwise
          * an IllegalStateException is thrown.
@@ -132,6 +131,22 @@ public class NFC extends AppCompatActivity {
             return false;
         }
         return (valid.containsKey(user) && passwd.equals(valid.get(user)));
+    }
+
+    protected void enable() {
+        mImageView.setImageResource(R.drawable.nfcgreen);
+        mImageView.setContentDescription(getResources().getString(R.string.imgNFCGreen));
+        textUser.setEnabled(true);
+        textPass.setEnabled(true);
+        submit.setEnabled(true);
+    }
+
+    protected void disable() {
+        mImageView.setImageResource(R.drawable.nfcred);
+        mImageView.setContentDescription(getResources().getString(R.string.imgNFCRed));
+        textUser.setEnabled(false);
+        textPass.setEnabled(false);
+        submit.setEnabled(false);
     }
 
     protected void showErrorDialog() {
@@ -273,11 +288,7 @@ public class NFC extends AppCompatActivity {
             if (result != null) {
                 if (result.equals(TAGName)) {
                     idNFC = result;
-                    mImageView.setImageResource(R.drawable.nfcgreen);
-                    mImageView.setContentDescription(getResources().getString(R.string.imgNFCGreen));
-                    textUser.setEnabled(true);
-                    textPass.setEnabled(true);
-                    submit.setEnabled(true);
+                    enable();
                 }
             }
         }

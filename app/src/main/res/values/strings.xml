@@ -11,4 +11,9 @@
     <string name="imgNFCGreen">Image NFC vert</string>
     <string name="wronglogin">Login failed</string>
     <string name="wrong">Username or Password not recognized</string>
+    <string name="authorizationMax">AUTHENTICATE_MAX</string>
+    <string name="authorizationMedium">AUTHENTICATE_MEDIUM</string>
+    <string name="authorizationMin">AUTHENTICATE_MIN</string>>
+    <string name="authorize">You have the authorization : </string>
+    <string name="lost">You lost authorization : </string>
 </resources>
