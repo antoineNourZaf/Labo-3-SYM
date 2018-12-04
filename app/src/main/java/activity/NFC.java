@@ -13,8 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
@@ -32,16 +33,27 @@ public class NFC extends AppCompatActivity {
 
     private NfcAdapter mNfcAdapter;
     private ImageView mImageView;
+    private EditText textUser;
+    private EditText textPass;
+    private Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nfc);
 
+        // Assign variable
         mImageView = findViewById(R.id.imageDisplay);
-
-
+        textUser  = findViewById(R.id.user);
+        textPass  = findViewById(R.id.psw);
+        submit  = findViewById(R.id.submit);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        // disable component
+        textUser.setEnabled(false);
+        textPass.setEnabled(false);
+        submit.setEnabled(false);
+
 
         if (mNfcAdapter == null) {
             // Stop here, we definitely need NFC
@@ -209,6 +221,9 @@ public class NFC extends AppCompatActivity {
                 if (result.equals("test")) {
                     mImageView.setImageResource(R.drawable.nfcgreen);
                     mImageView.setContentDescription(getResources().getString(R.string.imgNFCGreen));
+                    textUser.setEnabled(true);
+                    textPass.setEnabled(true);
+                    submit.setEnabled(true);
                 }
             }
         }
