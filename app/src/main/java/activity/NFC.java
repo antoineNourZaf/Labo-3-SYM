@@ -1,7 +1,9 @@
 package activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
@@ -9,10 +11,12 @@ import android.nfc.NdefRecord;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,17 +34,23 @@ public class NFC extends AppCompatActivity {
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
+    public static final String TAGName = "test";
+    private String idNFC;
 
     private NfcAdapter mNfcAdapter;
     private ImageView mImageView;
     private EditText textUser;
     private EditText textPass;
     private Button submit;
+    private static ArrayMap <String, String> valid = new ArrayMap<String, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nfc);
+
+        valid.put("test", "1234");
+        valid.put("qwertz", "1234");
 
         // Assign variable
         mImageView = findViewById(R.id.imageDisplay);
@@ -54,7 +64,6 @@ public class NFC extends AppCompatActivity {
         textPass.setEnabled(false);
         submit.setEnabled(false);
 
-
         if (mNfcAdapter == null) {
             // Stop here, we definitely need NFC
             Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
@@ -62,6 +71,24 @@ public class NFC extends AppCompatActivity {
             return;
 
         }
+
+        submit.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              String user = textUser.getText().toString();
+              String passwd = textPass.getText().toString(); // read password from EditText
+
+              if (isValid(user, passwd)) {
+                  Intent intent = new Intent(NFC.this, activity.TimeToLive.class);
+                  intent.putExtra("idNFC", idNFC);
+                  startActivity(intent);
+              } else {
+                  // Wrong combination, display pop-up dialog and stay on login screen
+                  showErrorDialog();
+              }
+          }
+      });
 
         handleIntent(getIntent());
     }
@@ -99,6 +126,32 @@ public class NFC extends AppCompatActivity {
         handleIntent(intent);
     }
 
+    private boolean isValid(String user, String passwd) {
+        if(user == null || passwd == null) {
+            Log.w(TAG, "isValid(user, passwd) - user and passwd cannot be null !");
+            return false;
+        }
+        return (valid.containsKey(user) && passwd.equals(valid.get(user)));
+    }
+
+    protected void showErrorDialog() {
+        /*
+         * Pop-up dialog to show error
+         */
+        AlertDialog.Builder alertbd = new AlertDialog.Builder(this);
+        alertbd.setIcon(android.R.drawable.ic_dialog_alert);
+        alertbd.setTitle(R.string.wronglogin);
+        alertbd.setMessage(R.string.wrong);
+        alertbd.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Clean field
+                textUser.setText("");
+                textPass.setText("");
+            }
+        });
+        alertbd.create().show();
+    }
+    //
     private void handleIntent(Intent intent) {
         String action = intent.getAction();
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
@@ -218,7 +271,8 @@ public class NFC extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                if (result.equals("test")) {
+                if (result.equals(TAGName)) {
+                    idNFC = result;
                     mImageView.setImageResource(R.drawable.nfcgreen);
                     mImageView.setContentDescription(getResources().getString(R.string.imgNFCGreen));
                     textUser.setEnabled(true);

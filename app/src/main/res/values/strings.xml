@@ -9,4 +9,6 @@
     <string name="signin">Sign in</string>
     <string name="imgNFCRed">Image NFC rouge</string>
     <string name="imgNFCGreen">Image NFC vert</string>
+    <string name="wronglogin">Login failed</string>
+    <string name="wrong">Username or Password not recognized</string>
 </resources>
