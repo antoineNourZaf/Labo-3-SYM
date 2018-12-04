@@ -2,6 +2,6 @@
     <string name="app_name">Labo-3 : SYM</string>
     <string name="NFC">NFC</string>
     <string name="QR">QR Code</string>
-    <string name="iBeacon">iBeacon</string>
+    <string name="Beacon">Beacon</string>
     <string name="Capteurs">Capteurs</string>
 </resources>

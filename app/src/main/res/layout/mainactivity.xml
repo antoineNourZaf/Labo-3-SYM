@@ -46,7 +46,7 @@
         tools:layout_editor_absoluteY="61dp" />
 
     <Button
-        android:id="@+id/iBeacon"
+        android:id="@+id/Beacon"
         android:layout_width="245dp"
         android:layout_height="50dp"
         android:layout_below="@+id/QRCode"
@@ -60,7 +60,7 @@
         android:layout_marginEnd="69dp"
         android:layout_marginRight="69dp"
         android:gravity="center"
-        android:text="@string/iBeacon"
+        android:text="@string/Beacon"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="123dp" />
 
@@ -68,7 +68,7 @@
         android:id="@+id/capteurs"
         android:layout_width="245dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/iBeacon"
+        android:layout_below="@+id/Beacon"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
