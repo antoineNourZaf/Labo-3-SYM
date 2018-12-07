@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 case R.id.capteurs: {
-                    // do something for button 2 click
+                    Intent intent = new Intent(MainActivity.this, ch.heigvd.iict.sym.a3dcompassapp.CompassActivity.class);
+                    startActivity(intent);
                     break;
                 }
             }

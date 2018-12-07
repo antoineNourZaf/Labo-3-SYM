@@ -1,16 +1,29 @@
 package ch.heigvd.iict.sym.a3dcompassapp;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import activity.R;
 
-public class CompassActivity extends AppCompatActivity {
+public class CompassActivity extends AppCompatActivity implements SensorEventListener {
 
     //opengl
     private OpenGLRenderer  opglr           = null;
     private GLSurfaceView   m3DView         = null;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private Sensor mMagnetometer;
+    final float alpha = (float) 0.8;
+
+    private float[] matrixArrow = new float[9];
+    private float[] gravity = new float[3];
+    private float[] geomagnetic = new float[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +44,49 @@ public class CompassActivity extends AppCompatActivity {
 
         //init opengl surface view
         this.m3DView.setRenderer(this.opglr);
+
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // alpha is calculated as t / (t + dT)
+        // with t, the low-pass filter's time-constant
+        // and dT, the event delivery rate
+        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+
+            gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+            gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+            gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+        }
+        if (event.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD) {
+            geomagnetic[0] = event.values[0];
+            geomagnetic[1] = event.values[1];
+            geomagnetic[2] = event.values[2];
+        }
+
+        if(SensorManager.getRotationMatrix(matrixArrow, null, gravity, geomagnetic)){
+            matrixArrow = this.opglr.swapRotMatrix(matrixArrow);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
