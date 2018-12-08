@@ -19,9 +19,15 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private Sensor mMagnetometer;
+
+    // alpha is calculated as t / (t + dT)
+    // with t, the low-pass filter's time-constant
+    // and dT, the event delivery rate
+    // Come from the documentation
     final float alpha = (float) 0.8;
 
-    private float[] matrixArrow = new float[9];
+    // It's more stable if we use a 16 matrix of point
+    private float[] matrixArrow = new float[16];
     private float[] gravity = new float[3];
     private float[] geomagnetic = new float[3];
 
@@ -65,37 +71,29 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // alpha is calculated as t / (t + dT)
-        // with t, the low-pass filter's time-constant
-        // and dT, the event delivery rate
+        // Check change in the position of the smartphone
         if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-
+            // According to the documentation it's a corrector for the gravity
             gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
             gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
             gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
         }
+
+        // Check change in the magnetic field
         if (event.sensor.getType()==Sensor.TYPE_MAGNETIC_FIELD) {
             geomagnetic[0] = event.values[0];
             geomagnetic[1] = event.values[1];
             geomagnetic[2] = event.values[2];
         }
 
+        // Reset the matrix if there are change
         if(SensorManager.getRotationMatrix(matrixArrow, null, gravity, geomagnetic)){
-            matrixArrow = this.opglr.swapRotMatrix(matrixArrow);
+                matrixArrow = this.opglr.swapRotMatrix(matrixArrow);
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+        //No need of this
     }
-
-    /* TODO */
-    // your activity need to register accelerometer and magnetometer sensors' updates
-    // then you may want to call
-    //  this.opglr.swapRotMatrix()
-    // with the 4x4 rotation matrix, everytime a new matrix is computed
-    // more information on rotation matrix can be found on-line:
-    // https://developer.android.com/reference/android/hardware/SensorManager.html#getRotationMatrix(float[],%20float[],%20float[],%20float[])
-
 }

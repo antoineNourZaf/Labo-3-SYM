@@ -20,4 +20,6 @@
         <activity android:name="ch.heigvd.iict.sym.a3dcompassapp.CompassActivity" />
     </application>
 
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="true" />
 </manifest>
