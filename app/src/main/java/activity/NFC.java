@@ -108,6 +108,8 @@ public class NFC extends AppCompatActivity {
         /**
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
+        // TODO check if it's correct
+        disable();
         stopForegroundDispatch(this, mNfcAdapter);
 
         super.onPause();

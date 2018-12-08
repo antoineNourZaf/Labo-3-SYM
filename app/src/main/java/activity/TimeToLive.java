@@ -16,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
@@ -111,6 +110,8 @@ public class TimeToLive extends AppCompatActivity {
          * an IllegalStateException is thrown.
          */
         setupForegroundDispatch(this, mNfcAdapter);
+        Intent intent = new Intent(activity.TimeToLive.this, NFC.class);
+        startActivity(intent);
     }
 
     @Override
@@ -121,6 +122,8 @@ public class TimeToLive extends AppCompatActivity {
         stopForegroundDispatch(this, mNfcAdapter);
 
         super.onPause();
+        Intent intent = new Intent(activity.TimeToLive.this, NFC.class);
+        startActivity(intent);
     }
 
     @Override
