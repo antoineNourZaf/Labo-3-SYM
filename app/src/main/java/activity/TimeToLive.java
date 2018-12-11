@@ -121,8 +121,6 @@ public class TimeToLive extends AppCompatActivity {
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
         stopForegroundDispatch(this, mNfcAdapter);
-        Intent intent = new Intent(TimeToLive.this, activity.NFC.class);
-        startActivity(intent);
         super.onPause();
     }
 

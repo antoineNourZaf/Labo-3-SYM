@@ -77,7 +77,7 @@ public class NFC extends AppCompatActivity {
               String user = textUser.getText().toString();
               String passwd = textPass.getText().toString(); // read password from EditText
 
-              if (isValid(user, passwd) || true) {
+              if (isValid(user, passwd)) {
                   Intent intent = new Intent(NFC.this, TimeToLive.class);
                   intent.putExtra("idNFC", idNFC);
                   startActivity(intent);
@@ -94,7 +94,6 @@ public class NFC extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // TODO check if it's correct
         disable();
         /**
          * It's important, that the activity is in the foreground (resumed). Otherwise
@@ -108,7 +107,6 @@ public class NFC extends AppCompatActivity {
         /**
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
-        // TODO check if it's correct
         disable();
         stopForegroundDispatch(this, mNfcAdapter);
 
