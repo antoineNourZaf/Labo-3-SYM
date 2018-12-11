@@ -32,8 +32,8 @@ public class TimeToLive extends AppCompatActivity {
     private Intent intent;
     private String idNFC;
     private String authorizationAccess;
-    private String authorizationAccessOK = getResources().getString(R.string.authorize);
-    private String authorizationAccessKO = getResources().getString(R.string.lost);
+    private String authorizationAccessOK;
+    private String authorizationAccessKO;
     private String authorizationLevel;
     private Context content;
 
@@ -41,6 +41,9 @@ public class TimeToLive extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.time_to_live);
+
+        authorizationAccessOK = getResources().getString(R.string.authorize);
+        authorizationAccessKO = getResources().getString(R.string.lost);
 
         content = this;
         intent = getIntent();
@@ -98,7 +101,7 @@ public class TimeToLive extends AppCompatActivity {
                     break;
                 }
             }
-            Toast.makeText( content, authorizationAccess + authorizationLevel, Toast.LENGTH_LONG).show();
+            Toast.makeText( content, authorizationAccess + authorizationLevel, Toast.LENGTH_SHORT).show();
         }
     };
     @Override
@@ -110,8 +113,6 @@ public class TimeToLive extends AppCompatActivity {
          * an IllegalStateException is thrown.
          */
         setupForegroundDispatch(this, mNfcAdapter);
-        Intent intent = new Intent(activity.TimeToLive.this, NFC.class);
-        startActivity(intent);
     }
 
     @Override
@@ -120,10 +121,9 @@ public class TimeToLive extends AppCompatActivity {
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
         stopForegroundDispatch(this, mNfcAdapter);
-
-        super.onPause();
-        Intent intent = new Intent(activity.TimeToLive.this, NFC.class);
+        Intent intent = new Intent(TimeToLive.this, activity.NFC.class);
         startActivity(intent);
+        super.onPause();
     }
 
     @Override

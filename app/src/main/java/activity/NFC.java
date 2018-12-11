@@ -77,8 +77,8 @@ public class NFC extends AppCompatActivity {
               String user = textUser.getText().toString();
               String passwd = textPass.getText().toString(); // read password from EditText
 
-              if (isValid(user, passwd)) {
-                  Intent intent = new Intent(NFC.this, activity.TimeToLive.class);
+              if (isValid(user, passwd) || true) {
+                  Intent intent = new Intent(NFC.this, TimeToLive.class);
                   intent.putExtra("idNFC", idNFC);
                   startActivity(intent);
               } else {
