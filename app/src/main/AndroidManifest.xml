@@ -18,8 +18,17 @@
             </intent-filter>
         </activity>
         <activity android:name="ch.heigvd.iict.sym.a3dcompassapp.CompassActivity" />
+        <activity
+            android:name="activity.NFC"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="activity.TimeToLive"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
-
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
     <uses-feature android:name="android.hardware.sensor.compass" android:required="true" />
 </manifest>
