@@ -24,6 +24,7 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
     private ProgressBar bar;
     private BeaconParser beaconParser;
     private BeaconManager beaconManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,26 +34,29 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
         // Set buttons
         switcher = findViewById(R.id.switcher);
         listView = findViewById(R.id.listView);
-        bar = findViewById(R.id.progressBar);
 
         // Set parsers for Beacon
+        beaconManager = BeaconManager.getInstanceForApplication(BeaconActivity.this);
         beaconParser = new BeaconParser();
-        beaconParser.setBeaconLayout("m-2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
+        beaconParser.setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
+        beaconManager.getBeaconParsers().add(beaconParser);
+        beaconManager.setRegionStatePersistenceEnabled(false);
 
         // Enable check for Beacon
         switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    bar.setIndeterminate(true);
-                    beaconManager = BeaconManager.getInstanceForApplication(BeaconActivity.this);
-                    beaconManager.getBeaconParsers().add(beaconParser);
+
+                    beaconManager.bind(BeaconActivity.this);
                     onBeaconServiceConnect();
 
                 } else {
-                    bar.setIndeterminate(false);
+                    bar = findViewById(R.id.progressBar);
                 }
             }
         });
+
+
 
     }
 
@@ -63,7 +67,11 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                 if (beacons.size() > 0) {
                     System.out.println("The first beacon I see is about "+beacons.iterator().next().getDistance()+" meters away.");
+
+                } else {
+
                 }
+
             }
         });
         try {

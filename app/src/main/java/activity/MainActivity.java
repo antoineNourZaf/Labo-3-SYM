@@ -1,5 +1,6 @@
 package activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button mClickButton1 = findViewById(R.id.NFC);
         Button mClickButton2 = findViewById(R.id.QRCode);
-        Button mClickButton3 = findViewById(R.id.iBeacon);
+        Button mClickButton3 = findViewById(R.id.Beacon);
         Button mClickButton4 = findViewById(R.id.capteurs);
 
 
@@ -37,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
 
-                case R.id.iBeacon: {
-                    // do something for button 1 click
+                case R.id.Beacon: {
+                    Intent intent = new Intent(MainActivity.this, BeaconActivity.class);
+                    startActivity(intent);
                     break;
                 }
 
