@@ -16,6 +16,8 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BeaconActivity extends AppCompatActivity implements BeaconConsumer {
 
@@ -24,16 +26,24 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
     private ProgressBar bar;
     private BeaconParser beaconParser;
     private BeaconManager beaconManager;
-
+    private Logger logger;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.beacon_activity);
 
+        logger = Logger.getLogger(BeaconActivity.class.getName());
+
         // Set buttons
         switcher = findViewById(R.id.switcher);
         listView = findViewById(R.id.listView);
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
 
         // Set parsers for Beacon
         beaconManager = BeaconManager.getInstanceForApplication(BeaconActivity.this);
@@ -55,9 +65,6 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
                 }
             }
         });
-
-
-
     }
 
     @Override
@@ -68,16 +75,13 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
                 if (beacons.size() > 0) {
                     System.out.println("The first beacon I see is about "+beacons.iterator().next().getDistance()+" meters away.");
 
-                } else {
-
                 }
-
             }
         });
         try {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
         } catch (RemoteException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Error while connecting to beacons");
         }
     }
 
