@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 case R.id.capteurs: {
-                    // do something for button 2 click
+                    Intent intent = new Intent(MainActivity.this, ch.heigvd.iict.sym.a3dcompassapp.CompassActivity.class);
+                    startActivity(intent);
                     break;
                 }
             }
