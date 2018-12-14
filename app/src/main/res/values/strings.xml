@@ -4,4 +4,16 @@
     <string name="QR">QR Code</string>
     <string name="Beacon">Beacon</string>
     <string name="Capteurs">Capteurs</string>
+    <string name="Username">Username</string>
+    <string name="psw">Password</string>
+    <string name="signin">Sign in</string>
+    <string name="imgNFCRed">Image NFC rouge</string>
+    <string name="imgNFCGreen">Image NFC vert</string>
+    <string name="wronglogin">Login failed</string>
+    <string name="wrong">Username or Password not recognized</string>
+    <string name="authorizationMax">AUTHENTICATE_MAX</string>
+    <string name="authorizationMedium">AUTHENTICATE_MEDIUM</string>
+    <string name="authorizationMin">AUTHENTICATE_MIN</string>>
+    <string name="authorize">You have the authorization : </string>
+    <string name="lost">You lost authorization : </string>
 </resources>

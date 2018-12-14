@@ -18,10 +18,23 @@
             </intent-filter>
         </activity>
         <activity android:name=".BeaconActivity"/>
+        <activity android:name="ch.heigvd.iict.sym.a3dcompassapp.CompassActivity" />
+        <activity
+            android:name="activity.NFC"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="activity.TimeToLive"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 <uses-permission android:name="android.permission.BLUETOOTH" android:required="false"/>
 <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false"/>
 <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="true" />
 </manifest>
