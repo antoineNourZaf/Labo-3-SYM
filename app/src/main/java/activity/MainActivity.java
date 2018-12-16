@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.QRCode: {
                     // do something for button 2 click
+                    Intent intent = new Intent(MainActivity.this, activity.QRcode.class);
+                    startActivity(intent);
                     break;
                 }
 
