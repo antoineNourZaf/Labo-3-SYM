@@ -3,10 +3,12 @@ package activity;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -22,11 +24,12 @@ import java.util.logging.Logger;
 public class BeaconActivity extends AppCompatActivity implements BeaconConsumer {
 
     private Switch switcher;
-    private ListView listView;
+    private TextView textView;
     private ProgressBar bar;
     private BeaconParser beaconParser;
     private BeaconManager beaconManager;
     private Logger logger;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,8 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
 
         // Set buttons
         switcher = findViewById(R.id.switcher);
-        listView = findViewById(R.id.listView);
+        textView = findViewById(R.id.textView);
+        bar = findViewById(R.id.progressBar);
     }
 
     @Override
@@ -46,6 +50,7 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
         super.onResume();
 
         // Set parsers for Beacon
+        bar.setVisibility(View.GONE);
         beaconManager = BeaconManager.getInstanceForApplication(BeaconActivity.this);
         beaconParser = new BeaconParser();
         beaconParser.setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
@@ -56,15 +61,23 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
         switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
+                    // Show that activity looking for beacons
+                    bar.setVisibility(View.VISIBLE);
                     beaconManager.bind(BeaconActivity.this);
                     onBeaconServiceConnect();
 
                 } else {
-                    bar = findViewById(R.id.progressBar);
+                    bar.setVisibility(View.GONE);
+                    beaconManager.unbind(BeaconActivity.this);
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        beaconManager.unbind(BeaconActivity.this);
     }
 
     @Override
@@ -72,8 +85,12 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+
+                // if there are beacons, we read their informations
                 if (beacons.size() > 0) {
-                    System.out.println("The first beacon I see is about "+beacons.iterator().next().getDistance()+" meters away.");
+                    textView.setText("Force du signal :" + beacons.iterator().next().getRssi()
+                    + "numero majeur : " + beacons.iterator().next().getId2()
+                    + "numero mineur : " + beacons.iterator().next().getId3());
 
                 }
             }
@@ -84,5 +101,4 @@ public class BeaconActivity extends AppCompatActivity implements BeaconConsumer 
             logger.log(Level.WARNING, "Error while connecting to beacons");
         }
     }
-
 }

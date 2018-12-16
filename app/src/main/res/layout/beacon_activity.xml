@@ -15,8 +15,8 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider" />
 
-    <ListView
-        android:id="@+id/listView"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="437dp" />
 
