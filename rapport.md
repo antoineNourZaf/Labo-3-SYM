@@ -1,4 +1,4 @@
-## Question 2.4 
+## Question 2.4
 Dans la manipulation ci-dessus, les tags NFC utilisés contiennent 4 valeurs textuelles codées en UTF-8 dans un format de message NDEF. Une personne malveillante ayant accès au porte-clés peut aisément copier les valeurs stockées dans celui-ci et les répliquer sur une autre puce NFC.
 A partir de l’API Android concernant les tags NFC, pouvez-vous imaginer une autre approche pour rendre plus compliqué le clonage des tags NFC ? Est-ce possible sur toutes les plateformes (Android et iOS), existe-il des limitations ? Voyez-vous d’autres possibilités ?
 
@@ -14,7 +14,7 @@ A partir de l’API Android concernant les tags NFC, pouvez-vous imaginer une au
 Points Positif et negatif des codes-barres/QRcode dans les situations suivante:
 Professionnelle:
 	Positif:
-		Les Qrcodes sont utile dans le cardre d'information gardée dans des lieux déjà sécurisé, porte fermée etc... Dans le but de donner par exemple des accès à un serveur ou autre. 
+		Les Qrcodes sont utile dans le cardre d'information gardée dans des lieux déjà sécurisé, porte fermée etc... Dans le but de donner par exemple des accès à un serveur ou autre.
 		Une autentification type pointage peut aussi être faite avec des QRcode en en attribuant un à chaque employer.
 	Negatif:
 		Les Qrcodes ont un principal défaut d'être copiable facilement. Une photo peut suffir si elle est prise avec un bon appareil.
@@ -28,18 +28,28 @@ Ludique:
 Financier:
 	Positif:
 		Les QRcode ont le grand avantage de pouvoir être générer et transférer gratuitement, ce qui en fait une technologie très pratique dans le cardre d'une application mobile.
-		
+
 Le QRcode à un grand avantage sur le NFC par sa facilité à être créé et propagé.
 Il n'est par contre pas difficile de copier un Qrcode, il est donc mieux dans un idée de sécurité de ne pas utiliser de QRcode comme unique sécurité.
-	
-	
+
+### 4.2 Beacons
+
+Bien que présenté comme une alternative a NFC, les beacons présentent tout de même
+des différences non négligeables, notamment en ce qui concerne la portée d'émission
+et les relations (one-to-one pour NFC et one-to-many pour les Beacons). Ainsi, il
+semblerait plus judicieux de penser que les beacons sont plus adaptés dans les situations
+ou il y'a beaucoup de personnes et de traffic (concert, evenement sportif, grandes boutiques, arrets de bus) et qu'ils représentent plus un complément plutot qu'une alternative a NFC, qui
+sera plus adapté pour des transactions concernant un seul utilisateur à la fois (validation de ticket de transport, paiement sans contact, carte d'acces etc...)
+
+src : http://zugara.com/beacon-vs-nfc-infographic
+
+
 ## Question 5.2
 Une fois la manipulation effectuée, vous constaterez que les animations de la flèche ne sont pas
 fluides, il va y avoir un tremblement plus ou moins important même si le téléphone ne bouge pas.
 Veuillez expliquer quelle est la cause la plus probable de ce tremblement et donner une manière (sans
 forcément l’implémenter) d’y remédier.
 
-	Le tremblement peut provenir de toutes les perturbations électromagniques engendrées par les wifis, les ondes téléphoniques ou autres. 
+	Le tremblement peut provenir de toutes les perturbations électromagniques engendrées par les wifis, les ondes téléphoniques ou autres.
 	Il faudrait pouvoir filtrer tous ces bruits en implémentant un filtre passe-haut dans l'application qui permettrait de n'effectuer un changement dans la flèche uniquement lorsque les changements sont suffisants.
 	Source : https://fr.wikipedia.org/wiki/Filtre_passe-haut
-	
